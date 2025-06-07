@@ -1,9 +1,8 @@
 import asyncio
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect
-from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-import openai
+from openai import AsyncOpenAI
 import os
 from dotenv import load_dotenv
 import json
@@ -24,11 +23,10 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Serve static files
-app.mount("/static", StaticFiles(directory="frontend"), name="static")
-
-# Configure OpenAI
-openai.api_key = os.getenv("OPENAI_API_KEY")
+# Configure OpenAI client
+client = AsyncOpenAI(
+    api_key=os.getenv("OPENAI_API_KEY")
+)
 
 class ProofRequest(BaseModel):
     statement: str
@@ -74,9 +72,6 @@ class ProofAnalyzer:
         """
         
         try:
-            from openai import AsyncOpenAI
-            client = AsyncOpenAI(api_key=openai.api_key)
-            
             response = await client.chat.completions.create(
                 model="gpt-4",
                 messages=[{"role": "user", "content": prompt}],
