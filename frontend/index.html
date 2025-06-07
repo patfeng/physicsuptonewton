@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Physics Before Newton - Proof Analyzer</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Physics Before Newton</h1>
+            <p>Analyze mathematical and physics statements from the pre-Newtonian era</p>
+        </header>
+        
+        <div class="input-section">
+            <div class="input-container">
+                <textarea 
+                    id="statementInput" 
+                    placeholder="Enter a mathematical or physics statement that could be proven before Newton's time (e.g., 'The sum of angles in a triangle equals 180 degrees')"
+                    rows="3"
+                ></textarea>
+                <button id="analyzeBtn" onclick="analyzeStatement()">
+                    <span class="btn-text">Analyze Statement</span>
+                    <span class="spinner" id="spinner"></span>
+                </button>
+            </div>
+        </div>
+        
+        <div class="visualization-container">
+            <div id="proofGraph" class="proof-graph">
+                <div class="instructions">
+                    <div class="instructions-content">
+                        <h3>How it works:</h3>
+                        <ul>
+                            <li>Enter a statement that could be proven before Newton's time (1727)</li>
+                            <li>The AI will break it down into simpler dependencies</li>
+                            <li>Dependencies appear as connected nodes radiating outward</li>
+                            <li>Click nodes to see detailed explanations</li>
+                            <li>Green nodes are elementary (5th grade level)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="sidebar" id="sidebar">
+            <div class="sidebar-content">
+                <h3>Statement Details</h3>
+                <div id="nodeDetails">
+                    <p>Click on a node to see its proof details and explanation.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="status-bar" id="statusBar">
+        <span id="statusText">Ready to analyze statements</span>
+        <div class="progress-container">
+            <div class="progress-bar" id="progressBar"></div>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html> 
