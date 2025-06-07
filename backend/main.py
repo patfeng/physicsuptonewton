@@ -50,7 +50,7 @@ class ProofAnalyzer:
         """Analyze a statement using OpenAI to determine if it's provable and get dependencies"""
         
         prompt = f"""
-        You are analyzing mathematical and physics statements that could be proven during Newton's time (before 1727).
+        You are analyzing mathematical and physics statements that could be proven during Newton's time.
         
         Statement: "{statement}"
         
@@ -64,7 +64,7 @@ class ProofAnalyzer:
         }}
         
         Guidelines:
-        - is_provable: true if this could be proven with knowledge available before Newton's death
+        - is_provable: true if this could be proven with knowledge available up to Newton's death
         - is_elementary: true if a 5th grader could understand this with basic explanation
         - dependencies: List 2-4 simpler statements that this depends on (empty if elementary)
         - Keep dependencies focused on fundamental concepts

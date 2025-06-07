@@ -11,11 +11,12 @@ const EXAMPLE_STATEMENTS = [
   "Parallel lines never meet"
 ];
 
-function App() {
+export default function App() {
   const [nodes, setNodes] = useState(new Map());
   const [connections, setConnections] = useState([]);
   const [selectedNode, setSelectedNode] = useState(null);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
+  const [showInput, setShowInput] = useState(true);
   const [statusText, setStatusText] = useState('Ready to analyze statements');
   const [progress, setProgress] = useState(0);
   const [statementInput, setStatementInput] = useState('');
@@ -214,6 +215,7 @@ function App() {
     }
 
     setIsAnalyzing(true);
+    setShowInput(false);
     clearVisualization();
 
     // Connect to WebSocket if not connected
@@ -264,30 +266,31 @@ function App() {
   return (
     <div className="container">
       <header className="header">
-        <h1>Physics Before Newton</h1>
-        <p>Analyze mathematical and physics statements from the pre-Newtonian era</p>
+        <h1>Proof Graph</h1>
       </header>
       
-      <div className="input-section">
-        <div className="input-container">
-          <textarea 
-            className="statement-input"
-            value={statementInput}
-            onChange={(e) => setStatementInput(e.target.value)}
-            placeholder={placeholder || "Enter a mathematical or physics statement that could be proven before Newton's time (e.g., 'The sum of angles in a triangle equals 180 degrees')"}
-            rows="3"
-            onKeyPress={handleKeyPress}
-          />
-          <button 
-            className="analyze-btn"
-            onClick={handleAnalyzeClick}
-            disabled={isAnalyzing}
-          >
-            <span className="btn-text">Analyze Statement</span>
-            {isAnalyzing && <span className="spinner"></span>}
-          </button>
+      {showInput && (
+        <div className="input-section">
+          <div className="input-container">
+            <textarea 
+              className="statement-input"
+              value={statementInput}
+              onChange={(e) => setStatementInput(e.target.value)}
+              placeholder={placeholder || "Enter a mathematical or physics statement that could be proven during Newton's time (e.g., 'The sum of angles in a triangle equals 180 degrees')"}
+              rows="3"
+              onKeyPress={handleKeyPress}
+            />
+            <button 
+              className="analyze-btn"
+              onClick={handleAnalyzeClick}
+              disabled={isAnalyzing}
+            >
+              <span className="btn-text">Analyze Statement</span>
+              {isAnalyzing && <span className="spinner"></span>}
+            </button>
+          </div>
         </div>
-      </div>
+      )}
       
       <div className="visualization-container">
         <ProofGraph 
@@ -302,6 +305,4 @@ function App() {
       <StatusBar statusText={statusText} progress={progress} />
     </div>
   );
-}
-
-export default App; 
+} 

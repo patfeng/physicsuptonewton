@@ -1,17 +1,23 @@
 {
   "name": "react-frontend",
   "version": "1.0.0",
-  "description": "Physics Before Newton - Proof Analyzer (React)",
+  "description": "Physics Up To Newton - Proof Analyzer (React)",
   "main": "index.js",
   "scripts": {
     "start": "npx webpack serve --mode development",
     "build": "npx webpack --mode production",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": ["react", "physics", "proof", "analyzer"],
+  "keywords": [
+    "react",
+    "physics",
+    "proof",
+    "analyzer"
+  ],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@xyflow/react": "^12.6.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Startup script for Physics Before Newton - Proof Analyzer
+Startup script for Physics Up To Newton - Proof Analyzer
 """
 
 import os
@@ -175,7 +175,7 @@ def start_servers():
 
 def main():
     """Main startup function"""
-    print("🧪 Physics Before Newton - Proof Analyzer (React Version)")
+    print("🧪 Physics Up To Newton - Proof Analyzer (React Version)")
     print("="*60)
     
     # Check requirements

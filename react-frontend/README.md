@@ -1,6 +1,6 @@
-# Physics Before Newton - React Frontend
+# Physics Up To Newton - React Frontend
 
-This is a React-based frontend for the Physics Before Newton proof analyzer application. It provides an interactive visualization of mathematical and physics proofs that could have been understood before Newton's time.
+This is a React-based frontend for the Physics Up To Newton proof analyzer application. It provides an interactive visualization of mathematical and physics proofs that could have been understood during Newton's time.
 
 ## Features
 

@@ -1,6 +1,6 @@
-# Physics Before Newton - Proof Analyzer
+# Physics Up To Newton - Proof Analyzer
 
-A web application that analyzes mathematical and physics statements from the pre-Newtonian era (before 1727) by breaking them down into fundamental dependencies using AI. The system uses OpenAI's GPT-4 to recursively decompose complex statements into simpler ones until they reach a level understandable by a 5th grader.
+A web application that analyzes mathematical and physics statements from the Newtonian era by breaking them down into fundamental dependencies using AI. The system uses OpenAI's GPT-4 to recursively decompose complex statements into simpler ones until they reach a level understandable by a 5th grader.
 
 ## Features
 
@@ -8,7 +8,7 @@ A web application that analyzes mathematical and physics statements from the pre
 - **Recursive Dependency Breakdown**: Uses BFS (Breadth-First Search) to systematically analyze dependencies
 - **Parallel Processing**: Multiple OpenAI API calls run simultaneously for efficiency
 - **Interactive Visualization**: Click nodes to see detailed proofs and explanations
-- **Historical Context**: Focuses on knowledge that could be proven before Newton's time
+- **Historical Context**: Focuses on knowledge that could be proven at Newton's time
 - **Visual Hierarchy**: Elementary concepts are highlighted in green
 
 ## Setup Instructions
@@ -24,7 +24,7 @@ A web application that analyzes mathematical and physics statements from the pre
 1. **Clone or download the project**
    ```bash
    git clone <repository-url>  # or download the files
-   cd physicsbeforenewton
+   cd physicsuptonewton
    ```
 
 2. **Install Python dependencies**
@@ -49,7 +49,7 @@ A web application that analyzes mathematical and physics statements from the pre
 
 ## Usage
 
-1. **Enter a Statement**: Type a mathematical or physics statement that could be proven before Newton's time (1727)
+1. **Enter a Statement**: Type a mathematical or physics statement that could be proven at Newton's time (1727)
 
 2. **Examples to try**:
    - "The sum of angles in a triangle equals 180 degrees"
@@ -130,7 +130,7 @@ A web application that analyzes mathematical and physics statements from the pre
 
 ## Historical Context
 
-The system focuses on mathematical and physics knowledge that would have been available before Isaac Newton's death in 1727. This includes:
+The system focuses on mathematical and physics knowledge that would have been available up to Isaac Newton's death in 1727. This includes:
 
 - Classical geometry (Euclid, Archimedes)
 - Basic algebra and arithmetic
