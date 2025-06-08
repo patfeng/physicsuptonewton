@@ -126,7 +126,7 @@ body {
     top: 0;
     left: 0;
     width: 100vw;
-    height: 100vh;
+    height: calc(100vh - 54px); /* Subtract status bar height (15px padding top + 15px padding bottom + 4px progress bar + 20px total) */
     background: rgba(255,255,255,0.95);
     overflow: hidden;
 }
@@ -312,7 +312,7 @@ body {
     top: 20px;
     left: 20px;
     width: 300px;
-    max-height: calc(100vh - 200px);
+    height: calc(100vh - 100px); /* Fixed height, accounting for top and bottom spacing */
     background: white;
     border-radius: 15px;
     box-shadow: 0 10px 30px rgba(0,0,0,0.2);
@@ -332,6 +332,30 @@ body {
     padding: 25px;
     height: 100%;
     overflow-y: auto;
+    /* Add smooth scrolling */
+    scroll-behavior: smooth;
+    /* Add custom scrollbar styling */
+    scrollbar-width: thin;
+    scrollbar-color: #2a5298 #f0f0f0;
+}
+
+/* Custom scrollbar for Webkit browsers */
+.sidebar-content::-webkit-scrollbar {
+    width: 8px;
+}
+
+.sidebar-content::-webkit-scrollbar-track {
+    background: #f0f0f0;
+    border-radius: 4px;
+}
+
+.sidebar-content::-webkit-scrollbar-thumb {
+    background: #2a5298;
+    border-radius: 4px;
+}
+
+.sidebar-content::-webkit-scrollbar-thumb:hover {
+    background: #1e3c72;
 }
 
 .sidebar-content h3 {
@@ -376,6 +400,12 @@ body {
     color: #333;
 }
 
+.status-controls {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
 .progress-container {
     width: 200px;
     height: 4px;
@@ -389,6 +419,24 @@ body {
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     transition: width 0.3s ease;
     border-radius: 2px;
+}
+
+.refresh-btn {
+    background: none;
+    border: none;
+    padding: 8px;
+    cursor: pointer;
+    color: #2a5298;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.refresh-btn:hover {
+    background: rgba(42, 82, 152, 0.1);
+    transform: rotate(180deg);
 }
 
 /* Animation for new nodes */

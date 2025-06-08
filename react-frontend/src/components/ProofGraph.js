@@ -9,7 +9,7 @@ import {
 } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
 
-export default function ProofGraph({ nodes: initialNodes, connections: initialEdges, onNodeClick }) {
+export default function ProofGraph({ nodes: initialNodes, connections: initialEdges, onNodeClick, highlightedNodes }) {
   // Convert initial nodes and edges to React Flow format
   const initialFlowNodes = Array.from(initialNodes.values()).map(node => ({
     id: node.id,
@@ -27,7 +27,9 @@ export default function ProofGraph({ nodes: initialNodes, connections: initialEd
       borderRadius: '5px',
       padding: '10px',
       width: 200,
-      textAlign: 'center'
+      textAlign: 'center',
+      opacity: highlightedNodes.has(node.id) ? 1 : 0.5,
+      transition: 'opacity 0.3s ease'
     }
   }));
 
@@ -35,9 +37,12 @@ export default function ProofGraph({ nodes: initialNodes, connections: initialEd
     id: edge.id,
     source: edge.from,
     target: edge.to,
-    type: 'smoothstep',
     animated: true,
-    style: { stroke: '#999' }
+    style: { 
+      stroke: highlightedNodes.has(edge.from) && highlightedNodes.has(edge.to) ? '#2196F3' : '#999',
+      opacity: highlightedNodes.has(edge.from) && highlightedNodes.has(edge.to) ? 1 : 0.3,
+      transition: 'all 0.3s ease'
+    }
   }));
 
   const [nodes, setNodes, onNodesChange] = useNodesState(initialFlowNodes);
@@ -47,7 +52,7 @@ export default function ProofGraph({ nodes: initialNodes, connections: initialEd
   useEffect(() => {
     setNodes(initialFlowNodes);
     setEdges(initialFlowEdges);
-  }, [initialNodes, initialEdges, setNodes, setEdges]);
+  }, [initialNodes, initialEdges, setNodes, setEdges, highlightedNodes]);
 
   const onNodeClickHandler = useCallback((event, node) => {
     onNodeClick({
@@ -67,7 +72,6 @@ export default function ProofGraph({ nodes: initialNodes, connections: initialEd
         onNodesChange={onNodesChange}
         onEdgesChange={onEdgesChange}
         onNodeClick={onNodeClickHandler}
-        fitView
       >
         <Background />
         <Controls />

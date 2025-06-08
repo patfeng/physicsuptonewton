@@ -15,6 +15,7 @@ export default function App() {
   const [nodes, setNodes] = useState(new Map());
   const [connections, setConnections] = useState([]);
   const [selectedNode, setSelectedNode] = useState(null);
+  const [highlightedNodes, setHighlightedNodes] = useState(new Set());
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [showInput, setShowInput] = useState(true);
   const [statusText, setStatusText] = useState('Ready to analyze statements');
@@ -38,19 +39,21 @@ export default function App() {
     return () => clearInterval(interval);
   }, [statementInput]);
 
-  const getAngleForNode = (level) => {
+  const getXForNode = (level) => {
     if (!levelAnglesRef.current.has(level)) {
       levelAnglesRef.current.set(level, []);
     }
     
     const angles = levelAnglesRef.current.get(level);
     const numNodesAtLevel = angles.length;
+    console.log("numNodesAtLevel", numNodesAtLevel);
+    const position = numNodesAtLevel*250-(level*250);
     
-    const angleStep = (2 * Math.PI) / Math.max(8, numNodesAtLevel + 1);
-    const angle = numNodesAtLevel * angleStep;
+    // const angleStep = (2 * Math.PI) /(numNodesAtLevel + 1);
+    // const angle = numNodesAtLevel * angleStep;
     
-    angles.push(angle);
-    return angle;
+    angles.push(position);
+    return position;
   };
 
   const addNode = useCallback((nodeData) => {
@@ -73,10 +76,10 @@ export default function App() {
       newNode.x = window.innerWidth / 2; // Center X for fullscreen
       newNode.y = window.innerHeight / 2; // Center Y for fullscreen
     } else {
-      const radius = [0, 200, 300, 400, 500, 600][Math.min(newNode.level, 5)];
-      const angle = getAngleForNode(newNode.level);
-      newNode.x = (window.innerWidth / 2) + radius * Math.cos(angle);
-      newNode.y = (window.innerHeight / 2) + radius * Math.sin(angle);
+      // const radius = [0, 200, 400, 600, 800, 1000, 1200, 1400][Math.min(newNode.level, 7)]+Math.random()*50;
+      const x = getXForNode(newNode.level) + Math.random()*10;
+      newNode.x = (window.innerWidth / 2) + x;
+      newNode.y = (window.innerHeight / 2) + (newNode.level*150)+Math.random()*50;
     }
 
     setNodes(prevNodes => {
@@ -128,7 +131,7 @@ export default function App() {
   const onAnalysisComplete = useCallback(() => {
     console.log('Analysis complete');
     setIsAnalyzing(false);
-    setStatusText(`Analysis complete - ${nodes.size} nodes generated`);
+    setStatusText(`Analysis complete`);
     setProgress(100);
     
     setTimeout(() => {
@@ -148,6 +151,7 @@ export default function App() {
     setNodes(new Map());
     setConnections([]);
     setSelectedNode(null);
+    setHighlightedNodes(new Set());
     levelAnglesRef.current.clear();
   }, []);
 
@@ -249,6 +253,46 @@ export default function App() {
 
   const handleNodeClick = useCallback((node) => {
     setSelectedNode(node);
+    
+    // Find all nodes that depend on this node (children)
+    const dependentNodes = new Set();
+    // Find all nodes this node depends on (parents)
+    const dependencyNodes = new Set();
+    
+    // Helper function to recursively find all children
+    const findChildren = (nodeId) => {
+      connections.forEach(conn => {
+        if (conn.from === nodeId) {
+          dependentNodes.add(conn.to);
+          findChildren(conn.to);
+        }
+      });
+    };
+    
+    // Helper function to recursively find all parents
+    const findParents = (nodeId) => {
+      connections.forEach(conn => {
+        if (conn.to === nodeId) {
+          dependencyNodes.add(conn.from);
+          findParents(conn.from);
+        }
+      });
+    };
+    
+    findChildren(node.id);
+    findParents(node.id);
+    
+    // Combine all nodes that should be highlighted
+    const allHighlighted = new Set([...dependentNodes, ...dependencyNodes, node.id]);
+    setHighlightedNodes(allHighlighted);
+  }, [connections]);
+
+  const handleVisualizationClick = useCallback((e) => {
+    // Only hide sidebar if clicking directly on the visualization container
+    // This prevents hiding when clicking on nodes (which have their own click handler)
+    if (e.target === e.currentTarget) {
+      setSelectedNode(null);
+    }
   }, []);
 
   const handleKeyPress = (e) => {
@@ -266,7 +310,7 @@ export default function App() {
   return (
     <div className="container">
       <header className="header">
-        <h1>Proof Graph</h1>
+        {/* <h1>Proof</h1> */}
       </header>
       
       {showInput && (
@@ -292,11 +336,12 @@ export default function App() {
         </div>
       )}
       
-      <div className="visualization-container">
+      <div className="visualization-container" onClick={handleVisualizationClick}>
         <ProofGraph 
           nodes={nodes}
           connections={connections}
           onNodeClick={handleNodeClick}
+          highlightedNodes={highlightedNodes}
         />
       </div>
       

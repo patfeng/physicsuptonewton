@@ -9,8 +9,7 @@ const Sidebar = ({ selectedNode }) => {
     return (
       <div className="node-details">
         <h4>{selectedNode.statement}</h4>
-        <p><strong>Level:</strong> {selectedNode.level}</p>
-        <p><strong>Type:</strong> {selectedNode.isElementary ? 'Elementary (5th grade level)' : 'Complex statement'}</p>
+        <p><strong>Type:</strong> {selectedNode.isElementary ? 'Elementary' : 'Complex statement'}</p>
         {selectedNode.explanation && (
           <p><strong>Explanation:</strong> {selectedNode.explanation}</p>
         )}
